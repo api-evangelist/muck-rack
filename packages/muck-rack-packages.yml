@@ -1,0 +1,42 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org/pypi/muckrack/json, rubygems.org API,
+  crates.io API, api.github.com/orgs/muckrack
+note: >-
+  Muck Rack publishes NO first-party client SDK in any public package registry.
+  The single first-party package that exists is a DEFENSIVE NAME RESERVATION on
+  PyPI, not a client library — its own summary says so verbatim. It is recorded
+  here because it is genuinely first-party (the maintainer address is
+  security@muckrack.com, a namespace-squatting countermeasure), but it is marked
+  `sdk: false` and NO `type: SDKs` pointer is emitted in apis.yml, because
+  awarding SDK credit for a placeholder would be false credit. The company's
+  three public GitHub repositories (renovo, celeriac.v1, quill-image-resize-module)
+  are internal/forked tooling unrelated to the Muck Rack API.
+sdk_count: 0
+packages:
+- language: python
+  registry: pypi
+  name: muckrack
+  url: https://pypi.org/project/muckrack/
+  install: null
+  official: true
+  sdk: false
+  kind: name-reservation
+  version: 0.0.1
+  published: '2025-04-03'
+  note: >-
+    Not a usable package. PyPI summary reads verbatim "This is not a useable Python
+    package. The name is reserved by Muck Rack." Maintainer email security@muckrack.com.
+    Published once and never updated. Counted as a supply-chain defence, not an SDK.
+registries_checked:
+- registry: npm
+  result: no first-party package found
+- registry: pypi
+  result: 1 first-party name reservation (muckrack); no SDK
+- registry: rubygems
+  result: 404 for muckrack
+- registry: crates.io
+  result: 0 results for muckrack
+- registry: github (org muckrack)
+  result: 3 public repos, none an API client

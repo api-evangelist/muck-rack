@@ -1,0 +1,56 @@
+generated: '2026-08-26'
+method: probed
+source: Live unauthenticated probes of https://muckrack.com/api/ (2026-08-26)
+format: drf-detail
+rfc9457: false
+note: >-
+  Muck Rack publishes no error reference and no OpenAPI, so this catalog records only
+  error shapes OBSERVED on the live unauthenticated surface. It is deliberately short:
+  every entry below was actually returned by the origin. The envelope is the Django
+  REST Framework default, a flat object with a single human-readable `detail` string.
+  It is NOT RFC 9457 application/problem+json — there is no `type`, `title`, `status`
+  or `instance` member, and the content type is application/json. There is no
+  machine-readable error code, so an agent can only branch on HTTP status plus English
+  string matching, which is brittle.
+envelope:
+  media_type: application/json
+  shape: '{"detail": "<human readable message>"}'
+  fields:
+  - name: detail
+    type: string
+    description: Human-readable message. No stable machine-readable code accompanies it.
+  machine_readable_code: false
+  request_id_field: null
+problem_types:
+- status: 403
+  detail: Authentication credentials were not provided.
+  meaning: No Authorization header was sent.
+  remediation: >-
+    Send `Authorization: Bearer <api key>`. Note the status is 403, not the 401 the
+    semantics call for, and no WWW-Authenticate challenge header is returned.
+  observed: true
+  evidence: GET https://muckrack.com/api/saved-searches/ with no credential
+- status: 403
+  detail: Invalid API key
+  meaning: A Bearer credential was supplied but is not a valid Muck Rack API key.
+  remediation: Reissue the key from Organization Settings -> API Keys.
+  observed: true
+  evidence: 'GET https://muckrack.com/api/saved-searches/ with Authorization: Bearer <invalid>'
+- status: 404
+  detail: null
+  meaning: >-
+    Unrouted path under /api/. The origin serves the site's standard HTML 404 page
+    (~78KB, "(404) Page Not Found | Muck Rack") rather than a JSON error, even when
+    Accept: application/json is sent.
+  remediation: Check the path; /api/ has no index or discovery document.
+  observed: true
+  evidence: GET https://muckrack.com/api/nope/ -> 404 text/html
+  defect: >-
+    Content negotiation is not honoured on 404. A JSON client receives an HTML body,
+    which will fail to parse and produce a misleading client-side error.
+gaps:
+- No published error-code registry or error reference page.
+- No RFC 9457 problem+json; no stable error codes to branch on.
+- 401-class conditions are returned as 403 with no WWW-Authenticate header.
+- 404 returns HTML to JSON clients.
+- 429 / rate-limit error shape could not be observed without credentials.

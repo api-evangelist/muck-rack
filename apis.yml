@@ -1,23 +1,109 @@
 aid: muck-rack
 name: Muck Rack
-description: 'Muck Rack is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Muck Rack is a public relations and earned-media software platform that
+  combines a journalist and media-outlet database, media monitoring across news, print,
+  broadcast, social and generative AI engines, pitching and press-release distribution,
+  and executive-ready earned-media reporting. The Muck Rack API is a paid add-on for
+  Premier-tier customers that provides programmatic access to the article data behind
+  a Saved Search, so communications teams can pipe earned coverage into internal systems
+  such as Snowflake or business-intelligence tools such as Power BI and Tableau. API
+  keys are issued by an account Admin under Organization Settings, and the API reference
+  itself is published only to authenticated customers.'
+image: https://cdn.muckrack.com/static/images/icon_facebook_share.f9886809.jpg
 url: https://raw.githubusercontent.com/api-evangelist/muck-rack/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
+- Public Relations
+- Media Monitoring
+- Media Database
+- Journalists
+- Communications
+- Press Releases
+- Earned Media
+- Social Listening
+- Marketing
+- News
+- Analytics
 - Company
-apis: []
+apis:
+- name: Muck Rack API
+  description: 'Read-only REST API providing programmatic access to the article data
+    behind a Muck Rack Saved Search. Sold as an add-on to Premier-tier subscriptions;
+    authenticated with an organization API key presented as an HTTP Bearer credential.
+    The public surface observed anonymously is a Django REST Framework router mounted
+    at /api/saved-searches/, which answers GET, HEAD and OPTIONS only. The full API
+    reference is published to authenticated customers only.'
+  humanURL: https://muckrack.com/pr-software/api
+  baseURL: https://muckrack.com/api/
+  tags:
+  - Earned Media
+  - Media Monitoring
+  - Articles
+  - Saved Searches
+  properties:
+  - type: Authentication
+    url: authentication/muck-rack-authentication.yml
+  - type: ErrorCatalog
+    url: errors/muck-rack-problem-types.yml
+  - type: Conventions
+    url: conventions/muck-rack-conventions.yml
+  - type: RateLimits
+    url: rate-limits/muck-rack-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/muck-rack-lifecycle.yml
+  - type: Conformance
+    url: conformance/muck-rack-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/muck-rack-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/muck-rack_stock/
+  url: https://muckrack.com/
+- type: Documentation
+  url: https://help.muckrack.com/en/articles/10175260-muck-rack-api
+- type: Pricing
+  url: https://muckrack.com/pricing
+- type: Blog
+  url: https://muckrack.com/blog
+- type: Support
+  url: https://help.muckrack.com/en/
+- type: TermsOfService
+  url: https://muckrack.com/terms/
+- type: PrivacyPolicy
+  url: https://muckrack.com/privacy
+- type: Login
+  url: https://muckrack.com/account/login/
+- type: GitHubOrganization
+  url: https://github.com/muckrack
+- type: StatusPage
+  url: https://status.muckrack.com/
+- type: Security
+  url: https://muckrack.com/responsible-disclosure
+- type: TrustCenter
+  url: https://trust.muckrack.com/
+- type: Compliance
+  url: conformance/muck-rack-conformance.yml
+- type: Packages
+  url: packages/muck-rack-packages.yml
+- type: Plans
+  url: plans/muck-rack-plans-pricing.yml
+- type: VulnerabilityDisclosure
+  url: security/muck-rack-vulnerability-disclosure.yml
+- type: LLMsTxt
+  url: llms/muck-rack-llms.txt
+- type: DataModel
+  url: data-model/muck-rack-data-model.yml
+
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

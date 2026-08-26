@@ -1,0 +1,105 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  Live probes of https://muckrack.com/api/ (2026-08-26), https://muckrack.com/legal/api-terms,
+  https://help.muckrack.com/en/articles/10175260-muck-rack-api
+note: >-
+  Muck Rack publishes no OpenAPI and no developer conventions page, so everything here
+  is either observed on the wire or read from the public API Terms Addendum. Fields we
+  could not establish are recorded as unknown rather than guessed.
+auth:
+  style: http-bearer
+  header: 'Authorization: Bearer <api key>'
+  see: authentication/muck-rack-authentication.yml
+idempotency:
+  supported: na
+  reason: >-
+    The public surface exposes no write operations. The router at /api/saved-searches/
+    returns `Allow: GET, HEAD, OPTIONS`, so every observable method is already safe and
+    idempotent by HTTP semantics. There is no unsafe operation for an idempotency key to
+    protect, which makes this `na` rather than a failure.
+  header: null
+  scope: null
+  retention: null
+  evidence: 'Allow: GET, HEAD, OPTIONS on https://muckrack.com/api/saved-searches/'
+pagination:
+  style: unknown
+  note: >-
+    Cannot be established anonymously — the collection endpoint returns 403 before any
+    payload. Django REST Framework defaults to either PageNumberPagination
+    (`?page=`) or LimitOffsetPagination (`?limit=&offset=`) with a
+    {count, next, previous, results} envelope, but which (if either) is configured is
+    not publicly documented and is NOT asserted here.
+  params: []
+  response_fields: []
+field_expansion:
+  supported: unknown
+sparse_fields:
+  supported: unknown
+metadata:
+  supported: unknown
+request_id:
+  header: null
+  supported: false
+  note: >-
+    No request-correlation header was observed on any response. Response headers carry
+    only cf-ray (a Cloudflare edge trace, not a Muck Rack request id) and
+    x-muckrack-canary on redirects. An agent cannot quote a support-usable request id.
+versioning:
+  style: none-observed
+  in_path: false
+  note: >-
+    The base is https://muckrack.com/api/ with no version segment; /api/v1/ and /api/v2/
+    both 404. The API Terms Addendum states plainly that "parts of our APIs are
+    undocumented" and may change without notice, so consumers have no versioned contract
+    to pin to.
+  evidence: https://muckrack.com/legal/api-terms
+error_envelope:
+  shape: '{"detail": "<message>"}'
+  rfc9457: false
+  see: errors/muck-rack-problem-types.yml
+rate_limit_signaling:
+  headers_observed: []
+  documented: false
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header appeared on any observed
+    response. The API Terms Addendum forbids usage "that exceeds rate limits" without
+    publishing what those limits are, so the constraint is contractually binding but
+    numerically unknowable to a consumer.
+  see: rate-limits/muck-rack-rate-limits.yml
+content_negotiation:
+  json_on_error: partial
+  note: 403 returns JSON; 404 returns HTML even when Accept is application/json.
+security_headers_observed:
+  strict_transport_security: max-age=31536000; includeSubDomains; preload
+  x_content_type_options: nosniff
+  x_frame_options: SAMEORIGIN
+  referrer_policy: same-origin
+  content_security_policy: present (frame-ancestors)
+reversibility:
+  grade: na
+  applicable: false
+  reason: >-
+    The API is read-only. `Allow: GET, HEAD, OPTIONS` on the only reachable router means
+    there is no write, no state mutation, and therefore nothing for an agent to undo.
+    Reversibility, dry-run and idempotency are all `na` for this provider rather than
+    zero — an agent calling this API cannot take an action that needs taking back.
+  write_surface: none-observed
+  reversal_operations: []
+  windows: []
+  evidence:
+  - url: https://muckrack.com/api/saved-searches/
+    observed: 'Allow: GET, HEAD, OPTIONS'
+    status: 403
+  caveat: >-
+    Scope limited to the anonymously reachable surface. The authenticated customer-only
+    reference may document write operations we cannot see; if so, their reversibility is
+    unknown, not absent.
+dry_run_mode:
+  supported: na
+  reason: Read-only surface; no action to rehearse.
+agent_notes:
+- The API Terms Addendum explicitly prohibits using the Services or Content to train a
+  machine learning or AI system, and prohibits use for developing any software program.
+  This is a contractual restriction on agentic consumption, not merely a technical one.
+  See https://muckrack.com/legal/api-terms.

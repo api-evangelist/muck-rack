@@ -1,0 +1,49 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  Derived from the observed REST surface of https://muckrack.com/api/ (2026-08-26) after
+  a search for a first-party MCP server returned nothing.
+status: candidate
+note: >-
+  Muck Rack ships NO MCP server. No hosted endpoint, no npm or PyPI stdio package, and no
+  mention of MCP in the product pages, help center or GitHub organization. The tools below
+  are a CANDIDATE surface derived from the two REST operations we could prove exist; they
+  are not offered by Muck Rack and no endpoint URL is invented for them. Note also that
+  Muck Rack's API Terms Addendum prohibits using the Services or Content to develop
+  software or train an AI system, so an MCP server over this API would need the provider's
+  agreement, not merely their API key.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+searched:
+- registry: npm
+  query: muck rack / muckrack
+  result: no first-party MCP package
+- registry: pypi
+  query: muckrack
+  result: only a non-usable name reservation
+- source: https://muckrack.com/pr-software/api
+  result: no MCP mention
+- source: https://github.com/muckrack
+  result: 3 public repos, none MCP-related
+- source: web search for "Muck Rack MCP server"
+  result: no first-party server found
+tools:
+- name: list_saved_searches
+  description: List the Saved Searches the authenticated organization owns.
+  rest: GET /api/saved-searches/
+  status: candidate
+  read_only: true
+- name: get_saved_search
+  description: Retrieve one Saved Search and the article data it defines.
+  rest: GET /api/saved-searches/{id}/
+  status: candidate
+  read_only: true
+  input_schema_known: false
+  note: >-
+    Parameter shape is unknown — the endpoint is auth-gated and no OpenAPI is published,
+    so the {id} type and any query parameters cannot be specified.

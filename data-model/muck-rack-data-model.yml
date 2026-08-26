@@ -1,0 +1,55 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  Derived from the anonymously observed routing surface of https://muckrack.com/api/
+  (2026-08-26) plus the product descriptions at https://muckrack.com/pr-software/api and
+  https://help.muckrack.com/en/articles/10175260-muck-rack-api
+note: >-
+  DELIBERATELY MINIMAL. Muck Rack publishes no OpenAPI and no object reference, and the
+  collection endpoint returns 403 before emitting any payload, so no field-level schema
+  could be observed. This file records only the two entities the routing surface proves
+  exist and the one relationship the provider states in prose. No attributes, types or
+  identifier formats are asserted, because none were observable — an invented field list
+  would be indistinguishable from a real one to a downstream reader.
+entities:
+- name: SavedSearch
+  path: /api/saved-searches/
+  detail_path: /api/saved-searches/{id}/
+  evidence: >-
+    Both paths return the DRF auth error {"detail":"Authentication credentials were not
+    provided."} while sibling paths under /api/ return the site's HTML 404, which
+    discriminates a mounted router from an unrouted path.
+  operations:
+  - list (GET /api/saved-searches/)
+  - retrieve (GET /api/saved-searches/{id}/)
+  writable: false
+  attributes: []
+  attributes_note: Not observable; endpoint is auth-gated before payload.
+- name: Article
+  path: null
+  evidence: >-
+    Not separately routed — /api/articles/ 301s to /api/articles which 404s, and
+    /api/saved-searches/{id}/articles/ 404s. The provider describes the API as
+    "programmatic access to article data for off platform use" scoped to a Saved Search,
+    so Articles are understood to be returned WITHIN the Saved Search representation
+    rather than as a standalone collection. Exact nesting is not confirmed.
+  operations: []
+  writable: false
+  attributes: []
+relationships:
+- from: SavedSearch
+  to: Article
+  type: has_many
+  via: unknown
+  confidence: medium
+  evidence: >-
+    Stated in prose by the provider: a Saved Search "defines the stream of articles you'll
+    pull with the API". The field name carrying the association is not observable.
+identifiers:
+  prefixes: []
+  note: No id format or prefix scheme is publicly documented or observable.
+gaps:
+- No public schema, so no field names, types, nullability or enums are recorded.
+- The Article representation is inferred from prose, not from a payload.
+- Journalist, outlet and media-list entities are core to the Muck Rack product but are
+  NOT exposed on the observed API surface and are deliberately not modelled here.

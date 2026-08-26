@@ -1,0 +1,73 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  Live unauthenticated probes of https://muckrack.com/api/saved-searches/ (2026-08-26),
+  corroborated by https://help.muckrack.com/en/articles/10175260-muck-rack-api and
+  https://muckrack.com/pr-software/api
+docs: https://help.muckrack.com/en/articles/10175260-muck-rack-api
+note: >-
+  Derived from live response behaviour, not from a specification — Muck Rack publishes
+  no OpenAPI and its API reference is visible only to authenticated customers. The
+  scheme below was established by differential probing: sending no credential and
+  sending a syntactically-valid-but-wrong credential in each of three header styles,
+  and reading which error the origin returned. Only the HTTP Bearer style produced a
+  key-specific rejection, which identifies it as the credential the server actually
+  parses.
+schemes:
+- name: apiKeyBearer
+  type: http
+  scheme: bearer
+  in: header
+  header: Authorization
+  format: 'Authorization: Bearer <api key>'
+  evidence:
+    no_credential:
+      request: GET /api/saved-searches/ with no Authorization header
+      status: 403
+      body: '{"detail":"Authentication credentials were not provided."}'
+    wrong_credential_bearer:
+      request: 'GET /api/saved-searches/ with Authorization: Bearer <invalid>'
+      status: 403
+      body: '{"detail":"Invalid API key"}'
+      interpretation: >-
+        The message changes from "credentials were not provided" to "Invalid API key",
+        proving the server parsed the Bearer credential and rejected its value. This is
+        the authoritative signal for the scheme.
+    wrong_credential_token:
+      request: 'GET /api/saved-searches/ with Authorization: Token <invalid>'
+      status: 403
+      body: '{"detail":"Authentication credentials were not provided."}'
+      interpretation: DRF TokenAuthentication is NOT enabled; the header was ignored.
+    wrong_credential_x_api_key:
+      request: 'GET /api/saved-searches/ with X-API-Key: <invalid>'
+      status: 403
+      body: '{"detail":"Authentication credentials were not provided."}'
+      interpretation: No custom API-key header is honoured.
+oauth2: false
+openid_connect: false
+mutual_tls: false
+scopes:
+  model: none
+  note: >-
+    No OAuth surface exists, so there is no scope model. Authorization is
+    organization-wide and coarse-grained: one key represents the organization and
+    reaches the Saved Searches its account owns. scopes/ is deliberately not emitted.
+key_management:
+  issuer: Account Admin
+  location: Muck Rack web app -> Organization Settings -> API Keys
+  self_service: false
+  note: >-
+    Keys can only be created once the API add-on has been purchased; an Admin user
+    presses "+ Create New" and supplies a description. There is no public developer
+    signup that yields a key.
+  rotation: not documented publicly
+  expiry: not documented publicly
+entitlement:
+  required_plan: Premier
+  add_on: true
+  note: The API is a paid add-on to the Premier tier, not included in any published plan.
+gaps:
+- No public OpenAPI or auth reference; the scheme above is inferred from live behaviour
+  rather than read from a contract.
+- Key rotation, expiry and revocation semantics are not documented publicly.
+- No scoped or least-privilege credential is offered; one organization key is all-or-nothing.

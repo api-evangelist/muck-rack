@@ -1,0 +1,54 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://muckrack.com/legal/api-terms, https://muckrack.com/terms/,
+  https://status.muckrack.com/, live probes 2026-08-26
+versioning:
+  scheme: none-observed
+  current_version: null
+  in_path: false
+  evidence: >-
+    Base is https://muckrack.com/api/ with no version segment; /api/v1/ and /api/v2/ both
+    return 404. No version header was observed.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  notice_period: null
+  note: >-
+    NO deprecation policy is published, and the API Terms Addendum runs the other way. It
+    states that "parts of our APIs are undocumented" and may be modified without notice,
+    and reserves the right to terminate API access "with or without cause, at any time,
+    and without notice." That is an explicit disclaimer of the stability guarantee a
+    deprecation policy exists to provide, so no `Deprecation` pointer is emitted.
+  source: https://muckrack.com/legal/api-terms
+status_page:
+  url: https://status.muckrack.com/
+  published: true
+  status: 200
+  vendor: third-party hosted status page (S3/CloudFront origin behind Fastly)
+  machine_readable_feed: false
+  note: >-
+    A dedicated status host is served on its own CDN and returns a real status-page
+    application. It renders client-side, and no machine-readable summary is exposed —
+    /api/v2/summary.json, /status.json, /history.rss and /feed.rss all return AccessDenied
+    from the bucket — so an agent cannot poll incident state programmatically.
+  probed: '2026-08-26'
+sla:
+  published: false
+  note: No public uptime commitment or SLA document was found.
+changelog:
+  api_changelog: false
+  product_updates: https://help.muckrack.com/en/articles/8274046-muck-rack-product-updates
+  note: >-
+    A general product-updates article exists in the help center, but it is not an API
+    changelog and its content could not be read (the help host answers a bot challenge to
+    our crawler). No ChangeLog pointer is emitted rather than pointing at a page we could
+    not verify carries dated API release notes.
+deprecated_operations: []
+support:
+  channel: https://help.muckrack.com/en/
+  api_support: >-
+    Muck Rack provides API documentation and troubleshooting support but explicitly does
+    not implement the integration; the customer's engineering team owns the build.
+  account_manager_required: true

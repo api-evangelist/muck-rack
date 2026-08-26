@@ -1,0 +1,65 @@
+generated: '2026-08-26'
+method: searched
+source: https://muckrack.com/pricing
+docs: https://muckrack.com/pricing
+plan_count: 3
+prices_published: false
+currency: null
+billing_period: annual
+self_serve: false
+note: >-
+  Muck Rack names three tiers on its public pricing page but publishes NO price for any of
+  them — every tier routes to "Contact us" or a demo request, and the page states pricing
+  "depends on a few factors specific to your team including the number of users". Contracts
+  are annual with no monthly self-serve option. Third-party resellers and procurement sites
+  circulate estimated ranges; those are NOT recorded here as prices because they are not
+  published by Muck Rack. plan_count is 3 because three tiers are genuinely named, not
+  because three prices exist.
+plans:
+- name: Starter
+  price: null
+  currency: null
+  period: annual
+  quota: null
+  overage: null
+  audience: individuals and small teams
+  features:
+  - Self-led onboarding
+  - Pooled customer success
+  - Limited media list exports
+  api_access: false
+- name: Standard
+  price: null
+  currency: null
+  period: annual
+  quota: null
+  overage: null
+  audience: most PR teams
+  features:
+  - Instructor-led onboarding
+  - Named customer success manager
+  - Full media list exports
+  api_access: false
+- name: Premier
+  price: null
+  currency: null
+  period: annual
+  quota: null
+  overage: null
+  audience: enterprises and advanced teams
+  features:
+  - Instructor-led onboarding
+  - Named customer success manager
+  - Custom dashboards
+  - AI-powered sentiment analysis
+  api_access: add-on
+  api_note: >-
+    API access is a separately purchased add-on available only on Premier. Its price is
+    usage-based — "depends on how much data you need and how frequently you request it,
+    and is billed annually" — and is quoted by a Customer Success Manager.
+add_ons:
+- name: Muck Rack API
+  price: null
+  pricing_model: usage-based, quoted, billed annually
+  requires_plan: Premier
+  source: https://muckrack.com/pr-software/api

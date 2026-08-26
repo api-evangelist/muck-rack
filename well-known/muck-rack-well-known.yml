@@ -1,0 +1,67 @@
+generated: '2026-08-26'
+method: probed
+source: live probes of https://muckrack.com/.well-known/* and https://status.muckrack.com/.well-known/*
+note: >-
+  No /.well-known/ document is served. muckrack.com sits behind a Cloudflare
+  interstitial that answers 403 "Just a moment..." (a ~5.8KB HTML challenge) to a
+  plain crawler on every path, which is NOT an absence signal. Each path below was
+  therefore re-probed through a browser-equivalent fetch, which resolved the
+  challenge and returned the ORIGIN status: a genuine 404 for every document. The
+  403 column records what our default crawler saw; the status column records the
+  true origin response. hit_count is 0, nothing was saved, and NO WellKnown or
+  SecurityTxt pointer is emitted in apis.yml — this file documents a verified
+  absence, not a presence.
+hit_count: 0
+hosts:
+- host: https://muckrack.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    crawler_status: 403
+    note: Cloudflare challenge to plain crawler; origin returns 404 on browser-equivalent fetch.
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    crawler_status: 403
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    crawler_status: 403
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    crawler_status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+    note: >-
+      Cloudflare challenge only; origin status not independently confirmed. Recorded
+      as unresolved rather than asserted absent. No OIDC surface is documented by the
+      provider and the API authenticates with a static Bearer API key, not OIDC.
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+    note: Cloudflare challenge only; no OAuth surface documented by the provider.
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+    note: Cloudflare challenge only; no OAuth surface documented by the provider.
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+    note: Cloudflare challenge only.
+- host: https://status.muckrack.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+    note: >-
+      S3/CloudFront origin returns an AccessDenied XML body for any unrouted path;
+      this is a bucket-level deny, not a served document.
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null

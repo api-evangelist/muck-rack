@@ -1,0 +1,40 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://muckrack.com/legal/api-terms, https://muckrack.com/pr-software/api, and live
+  response-header inspection of https://muckrack.com/api/saved-searches/ (2026-08-26)
+docs: https://muckrack.com/legal/api-terms
+limit_count: 0
+headers_observed: []
+status_on_exhaustion: null
+note: >-
+  An honest zero. Muck Rack publishes NO numeric rate limit anywhere public, yet its API
+  Terms Addendum makes exceeding rate limits a breach — it prohibits use "in a manner that
+  exceeds rate limits, or constitutes excessive or abusive usage". The obligation is
+  therefore contractually binding and numerically unknowable to a consumer, which is the
+  finding. No RateLimit-*, X-RateLimit-* or Retry-After header appeared on any observed
+  response, so there is no runtime signal an agent could back off against either; the only
+  rate-shaping headers present are Cloudflare edge headers. Pricing is described as
+  depending on "how much data you need and how frequently you request it", which implies a
+  negotiated per-contract quota rather than a published tier limit. limit_count is 0
+  because nothing quantified is published — not because no limit is enforced.
+limits: []
+runtime_signal:
+  ratelimit_headers: false
+  retry_after: false
+  standard: none
+  evidence: >-
+    Response headers on GET https://muckrack.com/api/saved-searches/ carried only
+    allow, x-frame-options, referrer-policy, x-content-type-options,
+    content-security-policy, x-xss-protection, vary, strict-transport-security and
+    Cloudflare's cf-cache-status / cf-ray. No rate-limit family header was present.
+contractual:
+  binding: true
+  quantified: false
+  quote: >-
+    "in a manner that exceeds rate limits, or constitutes excessive or abusive usage"
+  source: https://muckrack.com/legal/api-terms
+gaps:
+- No published request-per-second, per-minute or per-day limit.
+- No RateLimit-* or Retry-After headers, so no programmatic backoff signal.
+- The 429 response body shape could not be observed without credentials.

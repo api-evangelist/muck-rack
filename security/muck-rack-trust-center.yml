@@ -1,0 +1,36 @@
+generated: '2026-08-26'
+method: searched
+source: https://muckrack.com/legal-and-security
+published: true
+url: https://trust.muckrack.com/
+vendor: Drata
+vendor_evidence: >-
+  trust.muckrack.com is a CNAME to trust.cname.drata.com, identifying a Drata-hosted trust
+  center.
+verification:
+  direct_fetch: challenged
+  status: 403
+  note: >-
+    The trust center host answers a Cloudflare "Just a moment..." interstitial to our
+    crawler and to a browser-equivalent fetch alike, so its contents could not be read
+    directly. Existence is nonetheless established by two independent signals: the DNS
+    CNAME to Drata's trust-center service, and Muck Rack's own legal-and-security page
+    linking to it by name and describing what it holds. Recorded as present-but-unread
+    rather than asserted from contents we did not see.
+contents_per_provider:
+- Certificates
+- Policies
+- Compliance monitors
+- Personal Data Security Policy
+certifications:
+- SOC 2 Type II
+- GDPR
+- CCPA / CPRA
+- Cloud Security Alliance CAIQ v4 (under NDA)
+related:
+  legal_and_security: https://muckrack.com/legal-and-security
+  subprocessors: https://muckrack.com/legal/subprocessor-categories
+  dpa: https://muckrack.com/legal/l-dpa
+  privacy_contact: privacy@muckrack.com
+  security_contact: security@muckrack.com
+see_also: conformance/muck-rack-conformance.yml
