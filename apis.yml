@@ -9,6 +9,17 @@ description: 'Muck Rack is a public relations and earned-media software platform
   such as Snowflake or business-intelligence tools such as Power BI and Tableau. API
   keys are issued by an account Admin under Organization Settings, and the API reference
   itself is published only to authenticated customers.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.muckrack.com/static/images/icon_facebook_share.f9886809.jpg
 url: https://raw.githubusercontent.com/api-evangelist/muck-rack/refs/heads/main/apis.yml
 x-type: company
