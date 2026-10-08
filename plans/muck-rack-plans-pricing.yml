@@ -63,3 +63,30 @@ add_ons:
   pricing_model: usage-based, quoted, billed annually
   requires_plan: Premier
   source: https://muckrack.com/pr-software/api
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - year
+  - name: Standard
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - year
+  - name: Premier
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - year
